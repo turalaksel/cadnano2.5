@@ -20,25 +20,26 @@ if "-t" in sys.argv:
 
 def main(args):
     print(args)
-    from cadnano import initAppWithGui
-    app = initAppWithGui(args)
-    if "-p" in args:
-        print("Collecting profile data into cadnano.profile")
-        import cProfile
-        cProfile.runctx('app.exec_()', None, locals(), filename='cadnano.profile')
-        print("Done collecting profile data. Use -P to print it out.")
-    elif "-P" in args:
-        from pstats import Stats
-        s = Stats('cadnano.profile')
-        print("Internal Time Top 10:")
-        s.sort_stats('cumulative').print_stats(10)
-        print("\nTotal Time Top 10:")
-        s.sort_stats('time').print_stats(10)
-    elif "-t" in sys.argv:
+    if "-t" in sys.argv:
         print("running tests")
         from cadnano.tests.runall import main as runTests
         runTests(useXMLRunner=False)
-    sys.exit(app.exec_())
+    else:
+        from cadnano import initAppWithGui
+        app = initAppWithGui(args)
+        if "-p" in args:
+            print("Collecting profile data into cadnano.profile")
+            import cProfile
+            cProfile.runctx('app.exec_()', None, locals(), filename='cadnano.profile')
+            print("Done collecting profile data. Use -P to print it out.")
+        elif "-P" in args:
+            from pstats import Stats
+            s = Stats('cadnano.profile')
+            print("Internal Time Top 10:")
+            s.sort_stats('cumulative').print_stats(10)
+            print("\nTotal Time Top 10:")
+            s.sort_stats('time').print_stats(10)
+        sys.exit(app.exec_())
     
 if __name__ == '__main__':
     main(sys.argv)

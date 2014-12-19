@@ -40,22 +40,23 @@ class FunctionalTests(cadnanoguitestcase.CadnanoGuiTestCase):
         """docstring for testFunctional1"""
         pass
 
-    def getTestSequences(self, designname, sequencesToApply):
+    def getTestSequences(self, designname, sequences_to_apply):
         """
         Called by a sequence-verification functional test to read in a file
         (designname), apply scaffold sequence(s) to that design, and return
         the set of staple sequences."""
         # set up the document
-        from model.io.decoder import decode
+        from model.fileio.nnodecode import decodeFile
         
         inputfile = "tests/functionaltestinputs/%s" % designname
         document = self.document_controller.document()
-        with file(inputfile) as f:
-            decode(document, f.read())
+        decodeFile(inputfile, document=document)
+        # with open(inputfile) as f:
+        #     decode(document, f.read())
         self.setWidget(self.document_controller.win, False, None)
-        part = document.selectedInstance()
+        part = document.selectedInstance().reference()
         # apply one or more sequences to the design
-        for sequenceName, startVhNum, startIdx in sequencesToApply:
+        for sequenceName, startVhNum, startIdx in sequences_to_apply:
             sequence = sequences.get(sequenceName, None)
             for vh in part.getVirtualHelices():
                 if vh.number() == startVhNum:
