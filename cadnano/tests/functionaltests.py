@@ -1,9 +1,13 @@
 
 import sys
 sys.path.insert(0, '.')
+import os
+LOCAL_DIR = os.path.dirname(os.path.realpath(__file__)) 
+TEST_INPUT_DIR = os.path.join(LOCAL_DIR, 'functionaltestinputs')
 
 import time
-# from PyQt5.QtCore import Qt, QPoint
+from cadnano.proxyconfigure import proxyConfigure
+proxyConfigure('PyQt')
 from cadnano.data.dnasequences import sequences
 from cadnano.enum import StrandType
 from cadnano.virtualhelix import VirtualHelix
@@ -46,28 +50,28 @@ class FunctionalTests(cadnanoguitestcase.CadnanoGuiTestCase):
         (designname), apply scaffold sequence(s) to that design, and return
         the set of staple sequences."""
         # set up the document
-        from model.fileio.nnodecode import decodeFile
+        from cadnano.fileio.nnodecode import decodeFile
         
-        inputfile = "tests/functionaltestinputs/%s" % designname
+        inputfile = os.path.join(TEST_INPUT_DIR, designname)
+
         document = self.document_controller.document()
         decodeFile(inputfile, document=document)
-        # with open(inputfile) as f:
-        #     decode(document, f.read())
+
         self.setWidget(self.document_controller.win, False, None)
-        part = document.selectedInstance().reference()
+        part = document.selectedInstance()
         # apply one or more sequences to the design
-        for sequenceName, startVhNum, startIdx in sequences_to_apply:
-            sequence = sequences.get(sequenceName, None)
+        for sequence_name, start_vh_num, start_idx in sequences_to_apply:
+            sequence = sequences.get(sequence_name, None)
             for vh in part.getVirtualHelices():
-                if vh.number() == startVhNum:
-                    strand = vh.scaffoldStrandSet().getStrand(startIdx)
+                if vh.number() == start_vh_num:
+                    strand = vh.scaffoldStrandSet().getStrand(start_idx)
                     strand.oligo().applySequence(sequence)
-        generatedSequences = part.getStapleSequences()
-        return set(generatedSequences.splitlines())
+        generated_sequences = part.getStapleSequences()
+        return set(generated_sequences.splitlines())
 
     def getRefSequences(self, designname):
         """docstring for getRefSequences"""
-        staplefile = "tests/functionaltestinputs/%s" % designname
+        staplefile = os.path.join(TEST_INPUT_DIR, designname)
         with open(staplefile, 'rU') as f:
             readSequences = f.read()
         return set(readSequences.splitlines())

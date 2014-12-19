@@ -1,6 +1,8 @@
 
 import cadnano
 import cadnano.tests.guitestcase as guitestcase
+from cadnano.proxyconfigure import proxyConfigure
+proxyConfigure('PyQt')
 
 main = guitestcase.main
 

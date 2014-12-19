@@ -4,6 +4,7 @@ import unittest
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, qApp
+from PyQt5.QtCore import QCoreApplication
 
 main = unittest.main
 
@@ -25,7 +26,8 @@ class GUITestCase(unittest.TestCase):
 
         if not GUITestCase.__qAppInitialized:
             GUITestCase.__qAppInitialized = True
-            self._qApplicationFirstReference = QApplication([])
+            if QCoreApplication.instance() is None:
+                self._qApplicationFirstReference = QApplication([])
         self._app = qApp
         self._app.processEvents()
         self._wait = 0
