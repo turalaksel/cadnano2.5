@@ -1,33 +1,23 @@
-"""
-runtests.py
-Helper file to run tests with 1 command and output the results to an XML file.
-Usage: From the main cadnano folder: python -m tests.runtests
-Created by Flo Mazzoldi on 2011-06-15.
-
-My TextMate Script:
-
-cd "$TM_PROJECT_DIRECTORY"
-CADNANO_RUN_PLAINTEXT_TESTS=YES CADNANO_IGNORE_ENV_VARS_EXCEPT_FOR_ME=YES python tests/runall.py | pre
-"""
 
 import glob
 import os
 import unittest
-from xmlrunner import XMLTestRunner
+from .xmlrunner import XMLTestRunner
 # from unittests import UnitTests
 # from modeltests import ModelTests
-from functionaltests import FunctionalTests
+from .functionaltests import FunctionalTests
 # from recordedtests.template import RecordedTests
 
 def main(useXMLRunner=True):
     # load hard-coded tests
-    # unitsuite = unittest.makeSuite(UnitTests)
-    # modelsuite = unittest.makeSuite(ModelTests)
-    funsuite = unittest.makeSuite(FunctionalTests)
+    # unit_test_suite = unittest.makeSuite(UnitTests)
+    # model_test_suite = unittest.makeSuite(ModelTests)
+    functional_test_suite = unittest.makeSuite(FunctionalTests)
 
     # combine and run tests
-    # alltests = unittest.TestSuite([unitsuite, modelsuite, funsuite])
-    alltests = unittest.TestSuite([funsuite])
+    # alltests = unittest.TestSuite([unit_test_suite, model_test_suite, functional_test_suite])
+    alltests = unittest.TestSuite([functional_test_suite])
+
     if useXMLRunner:
         stream = file("testresults.xml", "w")
         runner = XMLTestRunner(stream)

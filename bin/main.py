@@ -34,10 +34,10 @@ def main(args):
         s.sort_stats('cumulative').print_stats(10)
         print("\nTotal Time Top 10:")
         s.sort_stats('time').print_stats(10)
-    # elif "-t" in sys.argv:
-    #     print("running tests")
-    #     from tests.runall import main as runTests
-    #     runTests(useXMLRunner=False)
+    elif "-t" in sys.argv:
+        print("running tests")
+        from cadnano.tests.runall import main as runTests
+        runTests(useXMLRunner=False)
     sys.exit(app.exec_())
     
 if __name__ == '__main__':

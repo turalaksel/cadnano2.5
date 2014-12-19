@@ -1,46 +1,17 @@
-# The MIT License
-#
-# Copyright (c) 2011 Wyss Institute at Harvard University
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-#
-# http://www.opensource.org/licenses/mit-license.php
-
-"""
-functionaltests.py
-
-Created by Shawn Douglas on 2011-06-28.
-"""
 
 import sys
 sys.path.insert(0, '.')
 
 import time
-from PyQt4.QtCore import Qt, QPoint
-from data.dnasequences import sequences
-from model.enum import StrandType
-from model.virtualhelix import VirtualHelix
-from tests.cadnanoguitestcase import CadnanoGuiTestCase
-import tests.cadnanoguitestcase  # for main()
+# from PyQt5.QtCore import Qt, QPoint
+from cadnano.data.dnasequences import sequences
+from cadnano.enum import StrandType
+from cadnano.virtualhelix import VirtualHelix
+
+import cadnano.tests.cadnanoguitestcase as cadnanoguitestcase
 
 
-class FunctionalTests(CadnanoGuiTestCase):
+class FunctionalTests(cadnanoguitestcase.CadnanoGuiTestCase):
     """
     Functional tests are end-to-end tests that simulate user interaction
     with the interface and verify that the final outputs (e.g. staple
@@ -54,7 +25,7 @@ class FunctionalTests(CadnanoGuiTestCase):
         The setUp method is called before running any test. It is used
         to set the general conditions for the tests to run correctly.
         """
-        CadnanoGuiTestCase.setUp(self)
+        cadnanoguitestcase.CadnanoGuiTestCase.setUp(self)
         # Add extra initialization here
 
     def tearDown(self):
@@ -62,7 +33,7 @@ class FunctionalTests(CadnanoGuiTestCase):
         The tearDown method is called at the end of running each test,
         generally used to clean up any objects created in setUp
         """
-        CadnanoGuiTestCase.tearDown(self)
+        cadnanoguitestcase.CadnanoGuiTestCase.tearDown(self)
         # Add functional-test-specific cleanup here
 
     def testFunctional1(self):
@@ -78,10 +49,10 @@ class FunctionalTests(CadnanoGuiTestCase):
         from model.io.decoder import decode
         
         inputfile = "tests/functionaltestinputs/%s" % designname
-        document = self.documentController.document()
+        document = self.document_controller.document()
         with file(inputfile) as f:
             decode(document, f.read())
-        self.setWidget(self.documentController.win, False, None)
+        self.setWidget(self.document_controller.win, False, None)
         part = document.selectedInstance()
         # apply one or more sequences to the design
         for sequenceName, startVhNum, startIdx in sequencesToApply:
@@ -186,21 +157,21 @@ class FunctionalTests(CadnanoGuiTestCase):
     # def testActiveSliceHandleAltShiftClick(self):
     #     """Alt+Shift+Click on ActiveSliceHandle extends scaffold strands."""
     #     # Create a new Honeycomb part
-    #     newHoneycombPartButton = self.mainWindow.selection_toolbar.widgetForAction(\
-    #                                    self.mainWindow.actionNewHoneycombPart)
+    #     newHoneycombPartButton = self.main_window.selection_toolbar.widgetForAction(\
+    #                                    self.main_window.actionNewHoneycombPart)
     #     self.click(newHoneycombPartButton)
     #     # Click each SliceHelix
-    #     sliceGraphicsItem = self.documentController.sliceGraphicsItem
+    #     sliceGraphicsItem = self.document_controller.sliceGraphicsItem
     #     slicehelix1 = sliceGraphicsItem.getSliceHelixByCoord(0, 0)
     #     slicehelix2 = sliceGraphicsItem.getSliceHelixByCoord(0, 1)
-    #     self.click(slicehelix1, qgraphicsscene=self.mainWindow.slicescene)
-    #     self.click(slicehelix2, qgraphicsscene=self.mainWindow.slicescene)
+    #     self.click(slicehelix1, qgraphicsscene=self.main_window.slicescene)
+    #     self.click(slicehelix2, qgraphicsscene=self.main_window.slicescene)
     #     # Click the activeSliceHandle with ALT and SHIFT modifiers
-    #     pathHelixGroup = self.documentController.pathHelixGroup
+    #     pathHelixGroup = self.document_controller.pathHelixGroup
     #     activeSliceHandle = pathHelixGroup.activeSliceHandle()
     #     self.mousePress(activeSliceHandle,\
     #                     modifiers=Qt.AltModifier|Qt.ShiftModifier,\
-    #                     qgraphicsscene=self.mainWindow.pathscene)
+    #                     qgraphicsscene=self.main_window.pathscene)
     #     # Check the model for correctness
     #     vh0 = self.app.v[0]
     #     vh1 = self.app.v[1]
@@ -212,31 +183,31 @@ class FunctionalTests(CadnanoGuiTestCase):
     # def testEndpointAltClick(self):
     #     """Alt+Click on a 5' or 3' endpoint extends it to its boundary."""
     #     # Create a new Honeycomb part
-    #     newHoneycombPartButton = self.mainWindow.selection_toolbar.widgetForAction(\
-    #                                    self.mainWindow.actionNewHoneycombPart)
+    #     newHoneycombPartButton = self.main_window.selection_toolbar.widgetForAction(\
+    #                                    self.main_window.actionNewHoneycombPart)
     #     self.click(newHoneycombPartButton)
     #     # Click each SliceHelix
-    #     sliceGraphicsItem = self.documentController.sliceGraphicsItem
+    #     sliceGraphicsItem = self.document_controller.sliceGraphicsItem
     #     slicehelix1 = sliceGraphicsItem.getSliceHelixByCoord(0, 0)
     #     slicehelix2 = sliceGraphicsItem.getSliceHelixByCoord(0, 1)
-    #     self.mousePress(slicehelix1, qgraphicsscene=self.mainWindow.slicescene)
-    #     self.mousePress(slicehelix2, qgraphicsscene=self.mainWindow.slicescene)
+    #     self.mousePress(slicehelix1, qgraphicsscene=self.main_window.slicescene)
+    #     self.mousePress(slicehelix2, qgraphicsscene=self.main_window.slicescene)
     #     # Click the path helices with the ALT modifier
-    #     pathHelixGroup = self.documentController.pathHelixGroup
+    #     pathHelixGroup = self.document_controller.pathHelixGroup
     #     ph0 = pathHelixGroup.getPathHelix(0)
     #     ph1 = pathHelixGroup.getPathHelix(1)
     #     self.mousePress(ph0, position=QPoint(410, 10),\
     #                     modifiers=Qt.AltModifier,\
-    #                     qgraphicsscene=self.mainWindow.pathscene)
+    #                     qgraphicsscene=self.main_window.pathscene)
     #     self.mousePress(ph0, position=QPoint(450, 10),\
     #                     modifiers=Qt.AltModifier,\
-    #                     qgraphicsscene=self.mainWindow.pathscene)
+    #                     qgraphicsscene=self.main_window.pathscene)
     #     self.mousePress(ph1, position=QPoint(410, 30),\
     #                     modifiers=Qt.AltModifier,\
-    #                     qgraphicsscene=self.mainWindow.pathscene)
+    #                     qgraphicsscene=self.main_window.pathscene)
     #     self.mousePress(ph1, position=QPoint(450, 30),\
     #                     modifiers=Qt.AltModifier,\
-    #                     qgraphicsscene=self.mainWindow.pathscene)
+    #                     qgraphicsscene=self.main_window.pathscene)
     #     # Check the model for correctness
     #     vh0 = self.app.v[0]
     #     vh1 = self.app.v[1]
@@ -248,5 +219,5 @@ class FunctionalTests(CadnanoGuiTestCase):
 
 
 if __name__ == '__main__':
-    print "Running Functional Tests"
-    tests.cadnanoguitestcase.main()
+    print("Running Functional Tests")
+    cadnanoguitestcase.main()

@@ -6,7 +6,7 @@ class SliceToolManager(QObject):
     """Manages interactions between the slice widgets/UI and the model."""
     def __init__(self, win):
         """
-        We store mainWindow because a controller's got to have
+        We store main_window because a controller's got to have
         references to both the layer above (UI) and the layer below (model)
         """
         super(SliceToolManager, self).__init__()

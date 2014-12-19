@@ -34,7 +34,7 @@ def documentWindowWasCreatedSlot(doc, win):
     doc.autobreakHandler = AutobreakHandler(doc, win)
 
 # Initialization
-for c in cadnano.app().documentControllers:
+for c in cadnano.app().document_controllers:
     doc, win = c.document(), c.window()
     doc.autobreakHandler = AutobreakHandler(doc, win)
 cadnano.app().documentWindowWasCreatedSignal.connect(documentWindowWasCreatedSlot)
