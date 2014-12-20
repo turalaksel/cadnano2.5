@@ -247,11 +247,14 @@ class OutlineRootItem(QTreeWidget):
     #     print("itemDoubleClicked", item, column)
 
 
-    def partAddedSlot(self, sender, model_part):
+    def partAddedSlot(self, sender, model_part_instance):
         """
         Receives notification from the model that a part has been added.
         Parts should add themselves to the QTreeWidget by passing parent=self.
         """
+        return
+        model_part = model_part_instance.reference()
+        print("outline", model_part)
         part_type = model_part.__class__.__name__
         if part_type == "DnaPart":
             dna_part_item = DnaPartItem(model_part, parent=self)

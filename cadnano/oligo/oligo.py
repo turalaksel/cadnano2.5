@@ -115,7 +115,7 @@ class Oligo(ProxyObject):
 
     def sequence(self):
         temp = self.strand5p()
-        if not temp:
+        if temp is None or temp.sequence() == '':
             return None
         if temp.sequence():
             return ''.join([Strand.sequence(strand) \
@@ -141,7 +141,11 @@ class Oligo(ProxyObject):
         modseq5p, modseq5p_name = part.getModSequence(strand5p, idx5p, 0)
         modseq3p, modseq3p_name = part.getModSequence(strand, idx3p, 1)
         seq = modseq5p + seq + modseq3p
-        output = "%d[%d],%d[%d],%s,%s,%s,%s,%s\n" % \
+        if modseq5p_name != '':
+            modseq5p_name = ',' + modseq5p_name
+        if modseq3p_name != '':
+            modseq3p_name = ',' + modseq3p_name
+        output = "%d[%d],%d[%d],%s,%s,%s%s%s\n" % \
                 (vh_num5p, idx5p, vh_num3p, idx3p, seq, len(seq),
                     self._color, modseq5p_name, modseq3p_name)
         return output

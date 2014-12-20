@@ -85,6 +85,7 @@ UndoCommand = undocommand.UndoCommand
 UndoStack = undostack.UndoStack
 
 class TempApp(object):
+    qApp = None
     documentWasCreatedSignal = ProxySignal(name='documentWasCreatedSignal')
 
 tapp = TempApp()

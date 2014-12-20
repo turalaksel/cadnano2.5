@@ -8,6 +8,7 @@ from PyQt5.QtCore import QCoreApplication
 
 main = unittest.main
 
+import cadnano
 
 class GUITestCase(unittest.TestCase):
     __qAppInitialized = False
@@ -26,14 +27,17 @@ class GUITestCase(unittest.TestCase):
 
         if not GUITestCase.__qAppInitialized:
             GUITestCase.__qAppInitialized = True
-            if QCoreApplication.instance() is None:
-                self._qApplicationFirstReference = QApplication([])
+            if not isinstance(cadnano.app().qApp, QApplication):
+                cadnano.initAppWithGui()
+                # self._qApplicationFirstReference = QApplication([])
         self._app = qApp
         self._app.processEvents()
         self._wait = 0
 
     def tearDown(self):
         self._test_widget.close()
+        # self._app = None
+        # self._qApplicationFirstReference = None
 
     def setWidget(self, widget, show=True, wait=None):
         """

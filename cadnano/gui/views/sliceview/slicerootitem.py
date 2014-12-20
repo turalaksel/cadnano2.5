@@ -32,7 +32,7 @@ class SliceRootItem(QGraphicsRectItem):
         """
         # self._model_part = model_part
         model_part = model_part_instance.reference()
-        print("partAddedSlot: ", model_part, model_part.__class__.__name__)
+        # print("partAddedSlot: ", model_part, model_part.__class__.__name__)
 
         if model_part.__class__.__name__ == "DnaPart":
             # print("yes DNApart")

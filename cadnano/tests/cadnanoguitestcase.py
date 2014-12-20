@@ -1,8 +1,8 @@
 
 import cadnano
 import cadnano.tests.guitestcase as guitestcase
-from cadnano.proxyconfigure import proxyConfigure
-proxyConfigure('PyQt')
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QCoreApplication
 
 main = guitestcase.main
 
@@ -18,8 +18,11 @@ class CadnanoGuiTestCase(guitestcase.GUITestCase):
         framework what you will be testing.
         """
         import sys
-        
-        self.app = cadnano.initAppWithGui() # kick off a Gui style app
+        if not isinstance(cadnano.app().qApp, QCoreApplication):
+            self.app = cadnano.initAppWithGui() # kick off a Gui style app
+        else:
+            self.app = cadnano.app()
+            self.app.finishInit()
         self.document_controller = list(self.app.document_controllers)[0]
         self.main_window = self.document_controller.win
 

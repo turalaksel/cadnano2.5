@@ -5,6 +5,8 @@ from code import interact
 from cadnano.proxyconfigure import proxyConfigure
 proxyConfigure('PyQt')
 import cadnano.util as util
+import cadnano
+
 decode = None
 Document = None
 DocumentController = None
@@ -33,7 +35,7 @@ class CadnanoQt(QObject):
         if argv is None:
             argv = []
         self.argv = argv
-        if QCoreApplication.instance() is None:
+        if not isinstance(cadnano.app().qApp, QCoreApplication):
             self.qApp = QApplication(argv)
             self.qApp.setWindowIcon(QIcon(ICON_PATH))
             assert(QCoreApplication.instance() is not None)
