@@ -43,8 +43,8 @@ class HoneycombDnaPart(object):
 
     @staticmethod
     def distanceFromClosestLatticeCoord(x, y, radius, scale_factor=1.0):
-        column_guess = x/(radius*root3) - 1
-        row_guess = (y - radius*2)/(radius*3)
+        column_guess = x/(radius*root3)
+        row_guess = -(y - radius*2)/(radius*3)
 
         possible_columns = (floor(column_guess), ceil(column_guess))
         possible_rows = (floor(row_guess), ceil(row_guess))
@@ -88,8 +88,8 @@ class HoneycombDnaPart(object):
         x is offset by radius*root3, y is offset by radius. -SD
         """
         # x = column*radius*root3
-        x = (column+1)*radius*root3
-        if HoneycombDnaPart.isOddParity(row, column):   # odd parity
+        x = (column)*radius*root3
+        if HoneycombDnaPart.isEvenParity(row, column):   # odd parity
             # y = row*radius*3 + radius
             y = row*radius*3 + radius*2
         else:                               # even parity

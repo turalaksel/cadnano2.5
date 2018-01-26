@@ -915,16 +915,16 @@ class ShortestPathHelper(object):
         assert isinstance(position, tuple) and len(position) is 2
         assert isinstance(point_map, dict) and len(point_map)
 
-        for coordinates, coordiante_position in point_map.items():
-            distance = (coordiante_position[0]-position[0])**2 + (coordiante_position[1]-position[1])**2
+        for coordinates, coordinate_position in point_map.items():
+            distance = (coordinate_position[0]-position[0])**2 + (coordinate_position[1]-position[1])**2
             if distance < _RADIUS**2:
                 # logger.debug('The closest point to %s,%s is %s,%s' % (position, best))
                 return coordinates
 
         best_coordinates = None
         best_distance = float('inf')
-        for coordinates, coordiante_position in point_map.items():
-            distance = (coordiante_position[0]-position[0])**2 + (coordiante_position[1]-position[1])**2
+        for coordinates, coordinate_position in point_map.items():
+            distance = (coordinate_position[0]-position[0])**2 + (coordinate_position[1]-position[1])**2
             if distance < best_distance:
                 best_distance = distance
                 best_coordinates = coordinates
@@ -1087,7 +1087,7 @@ class ShortestPathHelper(object):
             row = -node[0]
             column = node[1]
             if grid_type is GridType.HONEYCOMB:
-                parity = 0 if HoneycombDnaPart.isOddParity(row=row, column=column) else 1
+                parity = 0 if HoneycombDnaPart.isEvenParity(row=row, column=column) else 1
                 node_pos = HoneycombDnaPart.latticeCoordToPositionXY(radius=radius, row=row, column=column,
                                                                      scale_factor=scale_factor)
             else:

@@ -35,7 +35,7 @@ class GridItem(QGraphicsRectItem):
 
         self.dots = (styles.DOT_SIZE, styles.DOT_SIZE / 2)
         # self.allow_snap = part_item.window().action_vhelix_snap.isChecked()
-        self._draw_gridpoint_coordinates = False
+        self._draw_gridpoint_coordinates = True
         self.draw_lines = False
         self.points = []
         self.points_dict = dict()
@@ -135,8 +135,8 @@ class GridItem(QGraphicsRectItem):
                                coord=(row, column))
 
                 if self._draw_gridpoint_coordinates:
-                    font = QFont(styles.THE_FONT)
-                    path.addText(x - 10, -y + 5, font, "%s,%s" % (-row, column))
+                    font = QFont(styles.THE_FONT, 6)
+                    path.addText(x - 5, -y + 4, font, "%s,%s" % (-row, column))
 
                 pt.setPen(getPenObj(styles.GRAY_STROKE, styles.EMPTY_HELIX_STROKE_WIDTH))
 
@@ -306,7 +306,7 @@ class GridItem(QGraphicsRectItem):
         if point_item:
             row, column = coord
             if self.grid_type is GridType.HONEYCOMB:
-                parity = 0 if HoneycombDnaPart.isOddParity(row=row, column=column) else 1
+                parity = 0 if HoneycombDnaPart.isEvenParity(row=row, column=column) else 1
             elif self.grid_type is GridType.SQUARE:
                 parity = 0 if SquareDnaPart.isEvenParity(row=row, column=column) else 1
             else:
