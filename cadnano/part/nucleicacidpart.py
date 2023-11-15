@@ -76,7 +76,7 @@ from numpy.core.umath_tests import inner1d
 
 DEFAULT_CACHE_SIZE = 20
 
-def _defaultProperties(id_num, grid_type=GridType.HONEYCOMB):
+def _defaultProperties(id_num, grid_type=GridEnum.HONEYCOMB):
     props_dict = {'name': "vh%d" % (id_num),
                   'is_visible': True,
                   'color': '#00000000',
@@ -91,7 +91,7 @@ def _defaultProperties(id_num, grid_type=GridType.HONEYCOMB):
                   'length': -1,
                   'z': 0.0}
 
-    if grid_type == GridType.SQUARE:
+    if grid_type == GridEnum.SQUARE:
         props_dict['eulerZ'] = 193    # 170 (2nd set). For a Cadnano 2.0 design, the ideal offset angle
         props_dict['bases_per_repeat'] = 32
         props_dict['turns_per_repeat'] = 3
@@ -105,7 +105,7 @@ VH_PROPERTY_KEYS = set([x for x in _defaultProperties(0)[0]])
 Z_PROP_INDEX = -1  # index for Dataframe.iloc calls
 
 
-def _defaultDataFrame(size, grid_type=GridType.HONEYCOMB):
+def _defaultDataFrame(size, grid_type=GridEnum.HONEYCOMB):
     dummy_id_num = 999
     columns, row = _defaultProperties(dummy_id_num, grid_type)
     df = pd.DataFrame([row for i in range(size)], columns=columns)
