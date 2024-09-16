@@ -314,6 +314,8 @@ def decode(document: DocT, obj: dict, emit_signals: bool = True):
             except Exception:
                 print(strand, idx)
                 raise
+    if "sequenceOffset" in obj:
+        part.setSequenceOffset(obj["sequenceOffset"])
 # end def
 
 def isSegmentStartOrEnd(strandtype: EnumType, vh_num: int, base_idx: int,

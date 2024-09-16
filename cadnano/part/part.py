@@ -60,6 +60,9 @@ class Part(CNObject):
         # Selections
         self._selections = {}
 
+        # Sequence offset
+        self._sequenceOffset = 0
+
         if self.__class__ == Part:
             e = "This class is abstract. Perhaps you want HoneycombPart."
             raise NotImplementedError(e)
@@ -110,7 +113,26 @@ class Part(CNObject):
         return self._document
     # end def
 
+    def setSequenceOffset(self, offset=0):
+        """Set sequence offset
+        
+        Args:
+            offset (int)
+        """
+        self._sequenceOffset = offset
+    # end def
+
+    def getSequenceOffset(self):
+        """Set sequence offset
+        
+        Returns:
+            int
+        """
+        return  self._sequenceOffset
+    # end def
+
     def setDocument(self, document: DocT):
+
         """set this object's Document
 
         Args:

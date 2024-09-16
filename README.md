@@ -28,3 +28,7 @@ cadnano model code is BSD-3.
 cadnano GUI code that uses PyQt5 is GPLv3
 The both full licenses can be found in the `LICENSE` file
 
+## Temporary fix to Numpy version error
+
+Set NUMPY_EXPERIMENTAL_DTYPE_API environment variable to 1
+`export NUMPY_EXPERIMENTAL_DTYPE_API=1`

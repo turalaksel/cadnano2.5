@@ -157,7 +157,6 @@ def decodePart( document: DocT,
         for id_num, size in vh_id_list:
             x, y = origins[id_num]
             z = vh_props['z'][id_num]
-            vh_props['eulerZ'][id_num] = 0.5*(360./10.5)
             vals = [vh_props[k][id_num] for k in keys]
             part.createVirtualHelix(x, y, z, size,
                                     id_num=id_num,
@@ -207,11 +206,14 @@ def decodePart( document: DocT,
         is_fwd = oligo['is_5p_fwd']
         color = oligo['color']
         sequence = oligo['sequence']
+        name = oligo['name']
         strand5p = part.getStrand(is_fwd, id_num, idx)
         this_oligo = strand5p.oligo()
         # this_oligo.applyColor(color, use_undostack=False)
         if sequence is not None:
             this_oligo.applySequence(sequence, use_undostack=False)
+        if name is not None:
+            this_oligo.setProperty('name', name)
     # end for
 
     # INSERTIONS, SKIPS

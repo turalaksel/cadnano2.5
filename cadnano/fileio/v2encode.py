@@ -50,7 +50,7 @@ def encodeDocument(document: DocT) -> dict:
     name = "legacy-export-cn25"
     max_base_idx = max([part.maxBaseIdx(id_num) for id_num in vh_order])
 
-    print("Translating vh:(row,col) to legacy coordinates...")
+    # print("Translating vh:(row,col) to legacy coordinates...")
 
     min_row = float('inf')
     min_col = float('inf')
@@ -106,7 +106,7 @@ def encodeDocument(document: DocT) -> dict:
         new_row = row + row_offset
         new_col = col + col_offset
 
-        print("{0:>2}: ({1:>2},{2:>2}) -> ({3:>2},{4:>2})".format(id_num, row, col, new_row, new_col))
+        # print("{0:>2}: ({1:>2},{2:>2}) -> ({3:>2},{4:>2})".format(id_num, row, col, new_row, new_col))
 
         # Put everything together in a new dict
         vh_dict = {"row": new_row,
@@ -120,7 +120,7 @@ def encodeDocument(document: DocT) -> dict:
                    "stapLoop": [],
                    "stap_colors": stap_colors}
         vh_list.append(vh_dict)
-    obj = {"name": name, "vstrands": vh_list}
+    obj = {"name": name, "sequenceOffset": part.getSequenceOffset(), "vstrands": vh_list}
     return obj
 
 
