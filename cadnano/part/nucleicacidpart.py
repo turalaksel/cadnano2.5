@@ -72,7 +72,17 @@ from cadnano.cntypes import (
 inner1d(a, a) is equivalent to np.einsum('ik,ij->i', a, a)
 equivalent to np.sum(a*a, axis=1) but faster
 """
-from numpy.core.umath_tests import inner1d
+# Replace deprecated numpy.core.umath_tests import with compatible implementation
+def inner1d(a, b, out=None):
+    """
+    Compute the inner product of two arrays along the last axis.
+    This is a replacement for the deprecated numpy.core.umath_tests.inner1d
+    """
+    if out is None:
+        return np.einsum('ik,ik->i', a, b)
+    else:
+        np.einsum('ik,ik->i', a, b, out=out)
+        return out
 
 DEFAULT_CACHE_SIZE = 20
 
